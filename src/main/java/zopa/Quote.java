@@ -9,6 +9,9 @@ import java.util.List;
 import zopa.model.MarketData;
 import zopa.util.QuoteAlgorithm;
 
+/**
+ * Generates an optimal quote from market data for specified amount of loan.
+ */
 public class Quote {
 
 	public static final int PRECISION = 20;
@@ -26,14 +29,17 @@ public class Quote {
 			return o1.getRate().compareTo(o2.getRate());
 		});
 		this.loanAmount = loanAmount;
-		generateQuote();
-	}
-
-	private void generateQuote() {
+		
 		List<QuotePart> quoteParts = this.getQuoteParts();
 		this.joinQuoteParts(quoteParts);
 	}
 	
+	/**
+	 * Find offers with lowest rates.
+	 * Provide them as parts of this quote.
+	 * 
+	 * @return List of quote's parts
+	 */
 	private List<QuotePart> getQuoteParts() {
 		List<QuotePart> quoteParts = new LinkedList<>();
 		int remainingAmount = this.loanAmount;
@@ -62,6 +68,10 @@ public class Quote {
 		return quoteParts;
 	}
 	
+	/**
+	 * Calculate quote totals from quote parts.
+	 * @param quoteParts Parts of this quote
+	 */
 	private void joinQuoteParts(List<QuotePart> quoteParts) {
 		BigDecimal loanAmountDecimal = new BigDecimal(this.loanAmount);
 		
