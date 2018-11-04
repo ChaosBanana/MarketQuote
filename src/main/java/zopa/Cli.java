@@ -38,7 +38,8 @@ public class Cli {
 				System.out.println("loan_amount must be a number");
 				return;
 			}
-			new Quote(dataList, loanAmount);
+			Quote quote = new Quote(dataList, loanAmount);
+			
 		} else {
 			System.out.println("Unknown application");
 		}
