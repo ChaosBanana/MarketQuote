@@ -32,6 +32,12 @@ class CliTest {
 	void testQuote() {
 		String[] args = { "quote.exe", DATA_PATH, "1000" };
 		Cli.main(args);
+		assertEquals(String.format(
+				"Requested amount: £1000%n" + 
+				"Rate: 7.0%%%n" + 
+				"Monthly repayment: £30.78%n" +
+				"Total repayment: £1108.10%n"),
+			outContent.toString());
 	}
 
 	@Test

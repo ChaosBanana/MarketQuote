@@ -54,6 +54,14 @@ public class Cli {
 			System.out.println("Can't offer this quote");
 			return;
 		}
+
+		BigDecimal ratePercent = quote.getRate().multiply(new BigDecimal(100)).setScale(1);
+		System.out.println(String.format(
+				"Requested amount: £" + quote.getLoanAmount() + "%n" +
+						"Rate: " + ratePercent + "%%%n" +
+						"Monthly repayment: £" + quote.getMonthlyRepayment() + "%n" +
+						"Total repayment: £" + quote.getTotalRepayment()
+				));
 	}
 
 }
