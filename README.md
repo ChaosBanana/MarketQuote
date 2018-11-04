@@ -8,7 +8,7 @@ Requirements:
 Run the following command to execute:
 
 ~~~
-java -jar target/zopa-0.0.1-SNAPSHOT.jar quote.exe "./src/test/resources/data.csv" 1500
+java -jar target/zopa-0.0.1-SNAPSHOT.jar quote.exe "./src/test/resources/data.csv" 1000
 ~~~
 
 Run the following command to test and build:
