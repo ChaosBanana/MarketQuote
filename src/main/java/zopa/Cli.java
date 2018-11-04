@@ -1,8 +1,10 @@
 package zopa;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 
+import zopa.exception.CannotOfferQuote;
 import zopa.exception.CsvDataParseError;
 import zopa.model.MarketData;
 
@@ -31,17 +33,26 @@ public class Cli {
 		}
 
 		if (args[0].equals(CMD_QUOTE)) {
-			Integer loanAmount = null;
-			try {
-				loanAmount = Integer.parseInt(args[2]);
-			} catch (NumberFormatException e) {
-				System.out.println("loan_amount must be a number");
-				return;
-			}
-			Quote quote = new Quote(dataList, loanAmount);
-			
+			handleQuote(dataList, args[2]);
 		} else {
 			System.out.println("Unknown application");
+		}
+	}
+
+	private static void handleQuote(List<MarketData> dataList, String loanAmountStr) {
+		Integer loanAmount = null;
+		Quote quote = null;
+		try {
+			loanAmount = Integer.parseInt(loanAmountStr);
+		} catch (NumberFormatException e) {
+			System.out.println("loan_amount must be a number");
+			return;
+		}
+		try {
+			quote = new Quote(dataList, loanAmount);
+		} catch (CannotOfferQuote e) {
+			System.out.println("Can't offer this quote");
+			return;
 		}
 	}
 

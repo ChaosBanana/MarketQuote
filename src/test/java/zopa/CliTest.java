@@ -30,7 +30,7 @@ class CliTest {
 
 	@Test
 	void testQuote() {
-		String[] args = { "quote.exe", DATA_PATH, "1500" };
+		String[] args = { "quote.exe", DATA_PATH, "1000" };
 		Cli.main(args);
 	}
 
@@ -38,27 +38,21 @@ class CliTest {
 	void testMissingArguments() {
 		String[] args = {};
 		Cli.main(args);
-		assertEquals(String.format(
-				"Syntax: [application] [market_file] [loan_amount]%n"),
-				outContent.toString());
+		assertEquals(String.format("Syntax: [application] [market_file] [loan_amount]%n"), outContent.toString());
 	}
-	
+
 	@Test
 	void testIllegalLoan() {
 		String[] args = { "quote.exe", DATA_PATH, "1500a" };
 		Cli.main(args);
-		assertEquals(String.format(
-				"loan_amount must be a number%n"),
-				outContent.toString());
+		assertEquals(String.format("loan_amount must be a number%n"), outContent.toString());
 	}
-	
+
 	@Test
 	void testNonExistingFile() {
 		String[] args = { "quote.exe", "nonexistingfile", "1500" };
 		Cli.main(args);
-		assertEquals(String.format(
-				"Unable to read file%n"),
-				outContent.toString());
+		assertEquals(String.format("Unable to read file%n"), outContent.toString());
 	}
 
 }

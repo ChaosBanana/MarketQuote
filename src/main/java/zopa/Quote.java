@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import zopa.exception.CannotOfferQuote;
 import zopa.model.MarketData;
 import zopa.util.QuoteAlgorithm;
 
@@ -23,7 +24,7 @@ public class Quote {
 	private BigDecimal monthlyRepayment;
 	private BigDecimal totalRepayment;
 
-	public Quote(final List<MarketData> dataList, final int loanAmount) {
+	public Quote(final List<MarketData> dataList, final int loanAmount) throws CannotOfferQuote {
 		this.dataList = new ArrayList<>(dataList);
 		this.dataList.sort((o1, o2) -> {
 			return o1.getRate().compareTo(o2.getRate());
@@ -39,8 +40,9 @@ public class Quote {
 	 * Provide them as parts of this quote.
 	 * 
 	 * @return List of quote's parts
+	 * @throws CannotOfferQuote 
 	 */
-	private List<QuotePart> getQuoteParts() {
+	private List<QuotePart> getQuoteParts() throws CannotOfferQuote {
 		List<QuotePart> quoteParts = new LinkedList<>();
 		int remainingAmount = this.loanAmount;
 		for (MarketData data : dataList) {
@@ -64,6 +66,9 @@ public class Quote {
 			if (remainingAmount <= 0) {
 				break;
 			}
+		}
+		if (remainingAmount > 0) {
+			throw new CannotOfferQuote("Not enough money available in market");
 		}
 		return quoteParts;
 	}
